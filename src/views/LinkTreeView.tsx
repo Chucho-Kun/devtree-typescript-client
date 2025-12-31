@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function MainView() {
+export default function LinkTreeView() {
   return (
     <div>
-      MainView
+      LinkTreeView
     </div>
   )
 }

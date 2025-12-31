@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { type RegisterForm } from '../types'
 import { useForm } from 'react-hook-form'
+import axios , { isAxiosError } from 'axios'
+import { toast } from 'sonner'
+import { type RegisterForm } from '../types'
 import ErrorMessage from '../components/ErrorMessage'
+import api from '../config/axios'
 
 export default function RegisterView() {
 
@@ -14,15 +17,20 @@ export default function RegisterView() {
         password_confirmation: ''
     }
 
-    const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterForm>({ defaultValues: initialValues })
-
+    const { register, watch, reset, handleSubmit, formState: { errors } } = useForm<RegisterForm>({ defaultValues: initialValues })
     const password = watch('password')
-    console.log(password);
-    
 
-    const handleRegister = (formData : RegisterForm) => {
-        console.log(formData);
-        
+    const handleRegister = async (formData : RegisterForm) => {
+        try {
+             const { data } = await api.post('/auth/register', formData )
+             toast.success( data )
+             reset()
+        } catch (error) {
+            if( isAxiosError(error) && error.response ) {
+                toast.error( error.response?.data.error );
+                
+            }
+        }
     }
 
 return (
@@ -110,7 +118,7 @@ return (
 
         <input
             type="submit"
-            className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer cursor-pointer"
+            className="bg-cyan-500 p-3 text-white text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer cursor-pointer hover:bg-cyan-700 transition-colors duration-300"
             value='Crear Cuenta'
         />  
     </form>
