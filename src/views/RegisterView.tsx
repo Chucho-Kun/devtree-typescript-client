@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { type RegisterForm } from '../types'
 import { useForm } from 'react-hook-form'
 import ErrorMessage from '../components/ErrorMessage'
 
@@ -13,12 +14,14 @@ export default function RegisterView() {
         password_confirmation: ''
     }
 
-    const { register, watch, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+    const { register, watch, handleSubmit, formState: { errors } } = useForm<RegisterForm>({ defaultValues: initialValues })
 
-    console.log(errors);
+    const password = watch('password')
+    console.log(password);
+    
 
-    const handleRegister = () => {
-        console.log('desde el handleregister');
+    const handleRegister = (formData : RegisterForm) => {
+        console.log(formData);
         
     }
 
@@ -50,7 +53,11 @@ return (
                 placeholder="Email de Registro"
                 className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
                 {...register('email', {
-                    required: "El email es obligatorio"
+                    required: "El email es obligatorio",
+                    pattern: {
+                        value: /\S+@\S+\.\S+/,
+                        message: "E-mail no válido",
+                    },
                 })}
             />
             { errors.email && <ErrorMessage>{ errors.email.message }</ErrorMessage> }
@@ -76,7 +83,11 @@ return (
                 placeholder="Password de Registro"
                 className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
                 {...register('password', {
-                    required: "El password es obligatorio"
+                    required: "El password es obligatorio",
+                    minLength: {
+                        value: 8,
+                        message: "El password debe ser mínimo de 8 caracteres"
+                    }
                 })}
             />
             { errors.password && <ErrorMessage>{ errors.password.message }</ErrorMessage> }
@@ -90,7 +101,8 @@ return (
                 placeholder="Repetir Password"
                 className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
                 {...register('password_confirmation', {
-                    required: "El nombre es obligatorio"
+                    required: "El nombre es obligatorio",
+                    validate: (value) => value === password || 'Los passwords no son iguales'
                 })}
             />
             { errors.password_confirmation && <ErrorMessage>{ errors.password_confirmation.message }</ErrorMessage> }
