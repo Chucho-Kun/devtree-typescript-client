@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { getUser } from '../api/DevTreeAPI'
 import DevTree from '../components/DevTree'
+import Loader from '../components/Loader'
 import { Navigate } from 'react-router-dom'
+
 
 export default function AppLayout() {
 
@@ -12,7 +14,7 @@ export default function AppLayout() {
         refetchOnWindowFocus: false
     })
     
-    if(isLoading) return <div>Cargando...</div>
+    if(isLoading) return <Loader />
     if(isError) return <Navigate to={'/auth/login'} />
     if(data) return <DevTree data={data} />
 }

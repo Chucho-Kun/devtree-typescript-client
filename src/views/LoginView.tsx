@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios , { isAxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import ErrorMessage from '../components/ErrorMessage'
@@ -14,13 +14,18 @@ const defaultValues = {
     password: '' 
 }
 
+const navigate = useNavigate()
+
 const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({ defaultValues })
 
 const handleLogin = async (formData: LoginForm) => {
     try {
              const { data } = await api.post('/auth/login', formData )
-             //toast.success( data )
+             toast.success( 'Autenticado Correctamente' )
              localStorage.setItem('AUTH_TOKEN', data)
+             setTimeout(() => {
+                 navigate('/admin')
+             }, 1500);
         } catch (error) {
             if( isAxiosError(error) && error.response ) {
                 toast.error( error.response?.data.error );

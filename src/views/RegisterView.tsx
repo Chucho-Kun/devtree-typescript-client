@@ -27,7 +27,9 @@ export default function RegisterView() {
              const { data } = await api.post('/auth/register', formData )
              toast.success( data )
              reset()
-             navigate('/admin')
+             setTimeout(() => {
+                 navigate('/admin')
+             }, 1500);
         } catch (error) {
             if( isAxiosError(error) && error.response ) {
                 toast.error( error.response?.data.error );

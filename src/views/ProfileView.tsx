@@ -1,11 +1,15 @@
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ErrorMessage from '../components/ErrorMessage'
+import Loader from '../components/Loader'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { getUser, updateProfile } from '../api/DevTreeAPI'
+import { getUser, updateProfile, uploadImage } from '../api/DevTreeAPI'
 import { type User ,type ProfileForm } from '../types'
 
 export default function ProfileView() {
+
+    const [previewUrl , setPreviewUrl] = useState<boolean>(false)
 
     const queryClient = useQueryClient()
     const data: User = queryClient.getQueryData(['user'])!
@@ -25,6 +29,30 @@ export default function ProfileView() {
             queryClient.invalidateQueries({queryKey: ['user']})
         }
     })
+    const updateImageMutation = useMutation({
+        mutationFn: uploadImage,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (image) => {
+            //queryClient.invalidateQueries({ queryKey: ['user']}). // muestra img hasta que se retorna resp
+            queryClient.setQueryData(['user'], ( prevData: User ) => {
+                return {
+                    ...prevData, image
+                }
+            })
+            setTimeout(() => {
+                setPreviewUrl(false)
+            }, 800);
+        }
+    })
+
+    const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(e.target.files) {
+            setPreviewUrl(true)
+            updateImageMutation.mutate(e.target.files[0])
+        }
+    }
 
     const handleUserProfileForm = (formData: ProfileForm ) => {
         updateProfileMutation.mutate(formData)
@@ -75,8 +103,9 @@ export default function ProfileView() {
                     name="handle"
                     className="border-none bg-slate-100 rounded-lg p-2"
                     accept="image/*"
-                    onChange={ () => {} }
+                    onChange={ handleChangeImage }
                 />
+                {previewUrl && ( <Loader /> )}
             </div>
 
             <input
