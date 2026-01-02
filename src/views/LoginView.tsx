@@ -78,9 +78,11 @@ return (
                 value='Iniciar Sesión'
             />
         </form>
-        
-        <nav>
-            <Link to="/auth/register" >
+        <nav className="mt-10">
+            <Link
+                className="text-center text-white text-lg block" 
+                to="/auth/register" 
+            >
                 ¿No tienes una cuenta?
             </Link>
         </nav>
