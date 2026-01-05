@@ -55,7 +55,10 @@ export default function ProfileView() {
     }
 
     const handleUserProfileForm = (formData: ProfileForm ) => {
-        updateProfileMutation.mutate(formData)
+        const user: User = queryClient.getQueryData(['user'])!
+        user.description = formData.description
+        user.handle = formData.handle
+        updateProfileMutation.mutate(user)
     }
 
     return (
@@ -110,7 +113,7 @@ export default function ProfileView() {
 
             <input
                 type="submit"
-                className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer"
+                className="btn"
                 value='Guardar Cambios'
             />
         </form>

@@ -123,7 +123,7 @@ return (
 
             <input
                 type="submit"
-                className="bg-cyan-500 p-3 text-white text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer cursor-pointer hover:bg-cyan-700 transition-colors duration-300"
+                className="btn"
                 value='Crear Cuenta'
             />  
         </form>
