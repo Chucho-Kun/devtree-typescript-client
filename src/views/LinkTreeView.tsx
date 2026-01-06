@@ -5,10 +5,9 @@ import { updateProfile } from '../api/DevTreeAPI'
 import { isValidUrl } from '../utils'
 import DevTreeInput from '../components/DevTreeInput'
 import { toast } from 'sonner'
-import { type User } from '../types'
+import { type User, type SocialNetwork } from '../types'
 
 export default function LinkTreeView() {
-
   const [devTreeLinks, setDevTreeLinks] = useState(social)
 
   const queryClient = useQueryClient()
@@ -25,9 +24,8 @@ export default function LinkTreeView() {
   })
 
   useEffect( () => {
-      
     const updatedData = devTreeLinks.map( item => {
-      const userLink = JSON.parse( user.links ).find( link => link.name === item.name )
+      const userLink = JSON.parse( user.links ).find((link: SocialNetwork) => link.name === item.name )
       if( userLink ) {
         return { ...item, url: userLink.url, enabled: userLink.enabled }
       } 
@@ -38,11 +36,10 @@ export default function LinkTreeView() {
   },[])
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log(e.target.value);
-    const updatedLinks = devTreeLinks.map(link => link.name == e.target.name ? {...link, url: e.target.value } : link)
-    //console.log(updatedLinks)
+    const updatedLinks = devTreeLinks.map(link => link.name == e.target.name ? {...link, url: e.target.value } : link )
     setDevTreeLinks(updatedLinks)
   }
+  const links : SocialNetwork[] = JSON.parse( user.links )
   
   const handleEnableLink = ( socialNetwork: string ) => { 
     const updatedLinks = devTreeLinks.map( link => {
@@ -56,21 +53,48 @@ export default function LinkTreeView() {
     })
     setDevTreeLinks(updatedLinks)
 
-    let updatedItems: socialNetwork[] = []
-
-    const links: socialNetwork[] = JSON.parse(user.links)
-
+    let updatedItems: SocialNetwork[] = []
     const selectedSocialNetwork = updatedLinks.find( link => link.name === socialNetwork )
     if( selectedSocialNetwork?.enabled ) {
-      console.log('Habilitando', selectedSocialNetwork );
-      console.log(links.length);
-      const newItem = {
+      const id = links.filter( link => link.id ).length +1
+      if( links.some( link => link.name === socialNetwork ) ) {
+        updatedItems = links.map( link => {
+          if( link.name === socialNetwork ) {
+            return {
+              ...link,
+              enabled: true,
+              id
+            }
+          } else {
+            return link
+          }
+        })
+      } else {
+        const newItem = {
         ...selectedSocialNetwork,
-        id: links.length + 1
+        id
       }
         updatedItems = [...links, newItem]
+      }
+
     } else {
-      console.log('Deshabilitando', selectedSocialNetwork );
+      const indexToUpdate = links.findIndex( link => link.name === socialNetwork )
+      updatedItems = links.map( link => {
+        if( link.name === socialNetwork ) {
+          return {
+            ...link,
+            id: 0,
+            enabled: false
+          }
+        } else if ( link.id > indexToUpdate ) {
+          return {
+            ...link,
+            id: link.id - 1 
+          }
+        } else {
+          return link
+        }
+      })
       
     }
 
