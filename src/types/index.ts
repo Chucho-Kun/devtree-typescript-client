@@ -9,6 +9,8 @@ export type User = {
     links: string
 }
 
+export type UserHandler = Pick<User, 'description' | 'handle' | 'imagen' | 'links' | 'name' >
+
 export type RegisterForm = Pick<User, 'handle' | 'email'| 'name' > & {
     password: string
     password_confirmation: string

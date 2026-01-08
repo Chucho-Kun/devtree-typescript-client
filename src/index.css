@@ -1,4 +1,50 @@
 @import "tailwindcss";
 .btn {
-    @apply bg-cyan-500 p-3 text-white text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer cursor-pointer hover:bg-cyan-700 transition-colors duration-300
+    @apply 
+    bg-cyan-500 
+    p-3 
+    text-white 
+    text-lg 
+    w-full 
+    uppercase 
+    rounded-lg 
+    font-bold 
+    cursor-pointer 
+    cursor-pointer 
+    hover:bg-cyan-700 
+    transition-colors 
+    duration-300
+}
+.btn-2 {
+    @apply 
+    bg-green-600 
+    p-3 
+    text-white 
+    text-lg
+    uppercase 
+    rounded-lg 
+    font-bold 
+    cursor-pointer 
+    cursor-pointer 
+    hover:bg-green-700 
+    transition-colors 
+    duration-300
+    m-1
+}
+
+.btn-a {
+    @apply 
+    bg-slate-500 
+    p-3 
+    text-white 
+    text-lg
+    uppercase 
+    rounded-lg 
+    font-bold 
+    cursor-pointer 
+    cursor-pointer 
+    hover:bg-slate-600 
+    transition-colors 
+    duration-300
+    m-1
 }
