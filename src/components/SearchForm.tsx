@@ -1,4 +1,3 @@
-import React from 'react'
 import slugify from 'react-slugify'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -14,7 +13,7 @@ export default function SearchForm() {
         }
     })
 
-    const mutation = useMutation({
+    const mutation = useMutation<string | undefined, Error, string>({
         mutationFn: searchByHandler
     })
 
@@ -24,9 +23,6 @@ export default function SearchForm() {
         const slug = slugify( handle )
         mutation.mutate( slug )
     }
-
-    console.log(mutation);
-    
 
   return (
      <form

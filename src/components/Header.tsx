@@ -1,8 +1,7 @@
-import React from 'react'
 import AdminNavigation from '../components/nav/AdminNavigation'
 import HomeNavigation from '../components/nav/HomeNavigation'
 import Logo from '../components/Logo'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 export default function Header() {
     const location = useLocation()

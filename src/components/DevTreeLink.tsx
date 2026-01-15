@@ -1,10 +1,9 @@
-import React from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { type socialNetwork } from '../types'
+import { type SocialNetwork } from '../types'
 
 type DevTreeLinkProps = {
-    link: socialNetwork
+    link: SocialNetwork
 }
 
 export default function DevTreeLink({ link }: DevTreeLinkProps) {

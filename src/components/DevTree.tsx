@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { DndContext, closestCenter } from '@dnd-kit/core'
@@ -16,7 +16,7 @@ type DevTreeProps = {
 
 export default function DevTree({ data }: DevTreeProps ) {
 
-    const [ enabledLinks, setEnabledLinks ] = useState<socialNetwork[]>( JSON.parse( data.links).filter(( item: SocialNetwork ) => item.enabled ) )
+    const [ enabledLinks, setEnabledLinks ] = useState<SocialNetwork[]>( JSON.parse( data.links).filter(( item: SocialNetwork ) => item.enabled ) )
     
     useEffect(() => {
         setEnabledLinks( JSON.parse(data.links).filter(( item: SocialNetwork ) => item.enabled ) )
@@ -38,7 +38,8 @@ export default function DevTree({ data }: DevTreeProps ) {
             const links = order.concat( disabledLinks )
 
             
-            queryClient.setQueryData(( prevData: User) => {
+            queryClient.setQueryData<User>(["user"], ( prevData ) => {
+                if( !prevData ) return undefined
                 return {
                     ...prevData,
                     links: JSON.stringify( links )
@@ -73,9 +74,9 @@ export default function DevTree({ data }: DevTreeProps ) {
                         <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6">
                             <p className="text-4xl text-center text-white">{data.handle}</p>
                             
-                            {data.image && 
+                            {data.imagen && 
                                 <img 
-                                    src={ data.image } 
+                                    src={ data.imagen } 
                                     alt="Imagen Perfil"
                                     className="mx-auto max-w-[250px]"
                                 />

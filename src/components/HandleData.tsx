@@ -1,4 +1,3 @@
-import React from 'react'
 import { type UserHandler, type SocialNetwork } from '../types'
 
 type HandleDataProps = {
@@ -12,7 +11,7 @@ export default function HandleData({ data }: HandleDataProps) {
   return (
     <div className="space-y-6"> 
         <p className="text-3xl text-center bg-blue-600 p-2 font-black">{ data.handle }</p>
-        {data.image && <img src={ data.image } className="max-w-[250px] mx-auto" />}
+        {data.imagen && <img src={ data.imagen } className="max-w-[250px] mx-auto" />}
         <p className="text-lg text-center font-bold">{ data.description }</p>
         <div
             className="mt-20 flex flex-col gap-6"

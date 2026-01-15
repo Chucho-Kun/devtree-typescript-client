@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ErrorMessage from '../components/ErrorMessage'
 import Loader from '../components/Loader'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { getUser, updateProfile, uploadImage } from '../api/DevTreeAPI'
+import { updateProfile, uploadImage } from '../api/DevTreeAPI'
 import { type User ,type ProfileForm } from '../types'
 
 export default function ProfileView() {

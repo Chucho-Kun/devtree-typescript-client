@@ -1,6 +1,5 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios , { isAxiosError } from 'axios'
+import { isAxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import ErrorMessage from '../components/ErrorMessage'
 import {type LoginForm } from '../types'
