@@ -34,11 +34,13 @@ export default function ProfileView() {
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess: (image) => {
+        onSuccess: (imagen) => {
+            console.log('*', imagen);
+            
             //queryClient.invalidateQueries({ queryKey: ['user']}). // muestra img hasta que se retorna resp
             queryClient.setQueryData(['user'], ( prevData: User ) => {
                 return {
-                    ...prevData, image
+                    ...prevData, imagen
                 }
             })
             setTimeout(() => {

@@ -10,9 +10,9 @@ export default function HandleData({ data }: HandleDataProps) {
 
   return (
     <div className="space-y-6"> 
-        <p className="text-3xl text-center bg-blue-600 p-2 font-black">{ data.handle }</p>
-        {data.imagen && <img src={ data.imagen } className="max-w-[250px] mx-auto" />}
-        <p className="text-lg text-center font-bold">{ data.description }</p>
+        <p className="text-3xl text-center text-blue-200 bg-blue-600 p-2 font-black">{ data.handle }</p>
+        {data.imagen && <img src={ data.imagen } className="mx-auto" />}
+        <p className="text-lg text-center font-bold text-white">{ data.description }</p>
         <div
             className="mt-20 flex flex-col gap-6"
         >{ links.length ? 
