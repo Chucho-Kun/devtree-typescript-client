@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link , useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios , { isAxiosError } from 'axios'
 import { toast } from 'sonner'
@@ -9,12 +9,13 @@ import api from '../config/axios'
 
 export default function RegisterView() {
 
+    const location = useLocation()
     const navigate = useNavigate()
 
     const initialValues = {
         name: '',
         email: '',
-        handle: '',
+        handle: location?.state?.handle || '',
         password: '',
         password_confirmation: ''
     }
@@ -28,7 +29,7 @@ export default function RegisterView() {
              toast.success( data )
              reset()
              setTimeout(() => {
-                 navigate('/admin')
+                 navigate('/auth/login')
              }, 1500);
         } catch (error) {
             if( isAxiosError(error) && error.response ) {

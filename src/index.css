@@ -48,3 +48,14 @@
     duration-300
     m-1
 }
+
+.portada-home {
+    background-image: none;
+}
+
+@media ( min-width:1020px ) {
+    .portada-home {
+        background-image: url('/bg.svg');
+        background-size: 50%;
+    }   
+}
